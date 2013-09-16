@@ -1,6 +1,6 @@
 {
 	"name" : "gnkam/univ-savoie-edt",
-	"type" : "project",
+	"type" : "library",
 	"keywords" : ["kamsoft" ,"gnkw", "gnuk", "network", "kernel", "web", "kam", "soft", "edt", "univ", "savoie"],
 	"homepage" : "http://edt.gnkw.org",
 	"license" : "AGPL-3.0",

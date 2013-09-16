@@ -6,7 +6,4 @@ Emploi du temps pour l'Université de Savoie. Ce projet utilise [GNKW Creator](h
 
 ## Installation
 
-Cloner ce dépôt puis lorsque vous êtes au niveau du README.md, veuillez installer composer :
-
-  $ curl -sS https://getcomposer.org/installer | php
-
+Ce projet est une bibliothèque, pour l'installer, précisez simplement __gnkam/univ-savoie-edt__ dans votre _composer.json_.
