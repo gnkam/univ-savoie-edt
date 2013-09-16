@@ -1,0 +1,16 @@
+# Hidden files
+*~
+
+# File sources
+vendor/
+examples/cache
+
+# Composer
+composer.phar
+composer.lock
+
+# Project files
+
+## Kate
+.kateproject
+.kateproject.d/

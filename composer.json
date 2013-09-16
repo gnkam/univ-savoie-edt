@@ -1,0 +1,36 @@
+{
+	"name" : "gnkam/univ-savoie-edt",
+	"type" : "project",
+	"keywords" : ["kamsoft" ,"gnkw", "gnuk", "network", "kernel", "web", "kam", "soft", "edt", "univ", "savoie"],
+	"homepage" : "http://edt.gnkw.org",
+	"license" : "AGPL-3.0",
+	"authors" : [
+		{
+			"name" : "Camille Colomb",
+			"homepage" : "http://kamsoft.fr",
+			"email" : "colomb.c26@gmail.com",
+			"role" : "Developer"
+		},
+		{
+			"name" : "Sebastien Franchon",
+			"email" : "lordpampa@gmail.com",
+			"role" : "Developer"
+		},
+		{
+			"name" : "Anthony Rey",
+			"email" : "anthony.rey@mailoo.org",
+			"homepage" : "http://www.gnkw.org",
+			"role" : "Developer"
+		}
+	],
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    },
+	"require": {
+        "php": ">=5.3.3",
+        "gnkw/http" : "2.*"
+    },
+    "minimum-stability": "dev"
+}
