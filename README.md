@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Emploi du temps pour l'Université de Savoie. Ce projet utilise [GNKW Creator](https://github.com/Gnuk/GNKW_Creator.git)
+Emploi du temps pour l'Université de Savoie. Ce projet utilise Composer
 
 ## Installation
 
