@@ -24,13 +24,13 @@ use Gnkw\Http\Rest\Client;
 use Gnkw\Http\Uri;
 
 /**
- * Reciever class
+ * Receiver class
  * @author Camille Colomb
  * @author Sebastien Franchon
  * @author Anthony Rey <anthony.rey@mailoo.org>
  * @since 08/09/2013
  */
-class GroupReciever
+class GroupReceiver
 {
 	/**
 	* Crawler base client
@@ -69,7 +69,7 @@ class GroupReciever
 	protected $projectId;
 
 	/**
-	 * Reciever constructor
+	 * Receiver constructor
 	 * @param integer $projectId Year project id
 	 */
 	public function __construct($projectId)
@@ -318,7 +318,7 @@ class GroupReciever
 	}
 	
 	/**
-	* Recieve page content (HTML)
+	* Receive page content (HTML)
 	* @return Gnkw\Http\Resource
 	*/
 	protected function page()

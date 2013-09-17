@@ -20,7 +20,7 @@
 
 namespace Gnkam\Univ\Savoie\Edt;
 
-use Gnkam\Univ\Savoie\Edt\GroupReciever;
+use Gnkam\Univ\Savoie\Edt\GroupReceiver;
 
 /**
  * Formalizer class
@@ -157,8 +157,8 @@ class Formalizer
 				# Create lock file
 				file_put_contents($filePathPending, time());
 				
-				# Recieve the group json data
-				$reciever = new GroupReciever($this->projectId);
+				# Receive the group json data
+				$reciever = new GroupReceiver($this->projectId);
 				$json['data'] = $reciever->getArrayData($group);
 				
 				# Set meta group informations
