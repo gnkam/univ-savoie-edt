@@ -17,7 +17,7 @@
 * You should have received a copy of the GNU Affero General Public License
 * along with Gnkam Univ Savoie Edt.  If not, see <http://www.gnu.org/licenses/>.
 */
-	require_once(__DIR__ . '/../app/gnkw.php');
+	require_once(__DIR__ . '/../vendor/autoload.php');
 	
 	use Gnkam\Univ\Savoie\Edt\Formalizer;
 	

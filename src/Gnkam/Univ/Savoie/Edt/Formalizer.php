@@ -20,8 +20,6 @@
 
 namespace Gnkam\Univ\Savoie\Edt;
 
-use Gnkam\Univ\Savoie\Edt\GroupReceiver;
-
 /**
  * Formalizer class
  * @author Anthony Rey <anthony.rey@mailoo.org>
