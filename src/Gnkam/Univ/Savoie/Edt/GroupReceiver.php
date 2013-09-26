@@ -77,7 +77,10 @@ class GroupReceiver
 		$this->projectId = $projectId;
 		$this->client = new Client('http://ade52-savoie.grenet.fr/ade/');
 		$connect = $this->connect();
-		$node = $this->openNode();
+		$nodeTrainee = $this->openNode('trainee');
+		$nodeInstructor = $this->openNode('instructor');
+		$nodeRoom = $this->openNode('room');
+		$nodeResource = $this->openNode('resource');
 		$showTable = $this->showTable();
 		$this->selectAllWeeks();
 	}
@@ -206,10 +209,10 @@ class GroupReceiver
 	* Open Node
 	* @return Gnkw\Http\Resource
 	*/
-	protected function openNode()
+	protected function openNode($category)
 	{
 		$url = new Uri('/standard/gui/tree.jsp');
-		$url->addParam('category', 'trainee');
+		$url->addParam('category', $category);
 		$url->addParam('expand', 'false');
 		$url->addParam('forceLoad', 'false');
 		$url->addParam('reload', 'false');
