@@ -19,32 +19,15 @@
 */
 
 namespace Gnkam\Univ\Savoie\Edt;
+use Gnkam\Base\Formalizer as BaseFormalizer;
 
 /**
  * Formalizer class
  * @author Anthony Rey <anthony.rey@mailoo.org>
  * @since 15/09/2013
  */
-class Formalizer
+class Formalizer extends BaseFormalizer
 {
-
-	/**
-	* Cache directory
-	* @var string
-	*/
-	private $cache;
-	
-	/**
-	* Know there is a cache
-	* @var boolean
-	*/
-	private $cachingOk = false;
-	
-	/**
-	* Update time in seconds
-	* @var integer
-	*/
-	private $update;
 	
 	/**
 	* ProjectId (change every year, see ADE real edt to know year value)
@@ -60,15 +43,9 @@ class Formalizer
 	 */
 	public function __construct($cache, $update, $projectId)
 	{
-		if(is_dir($cache))
-		{
-			$this->cache = rtrim($cache, '/');
-			$this->cachingOk = true;
-		}
+		parent::__construct($cache, $update);
 		
 		$this->projectId = $projectId;
-		
-		$this->update = $update;
 	}
 	
 	/**
@@ -85,138 +62,18 @@ class Formalizer
 			return null;
 		}
 		
-		# Check for cache
-		if(!$this->cachingOk)
-		{
-			return null;
-		}
-		
-		# Create cache group directory if not exists
-		$fileDir = $this->cache . '/group';
-		if(!is_dir($fileDir))
-		{
-			if(!mkdir($fileDir))
-			{
-				return null;
-			}
-		}
-		
-		# Files to create
-		$filePath = $fileDir . '/' . $group . '.json';
-		$filePathPending = $filePath . '.lock';
-		
-		# Initialisation
-		$json = array();
-		$recreate = false;
-		$currentTime = time();
-		
-		# Test pending
-		$pending = $this->testPending($filePathPending);
-
-		# File already exist
-		if(is_file($filePath))
-		{
-			$json = json_decode(file_get_contents($filePath), true);
-			if($pending)
-			{
-				$json['status'] = 'pending';
-			}
-			else
-			{
-				if(isset($json['updated']))
-				{
-					$updateTimeMax = $json['updated'] + $this->update;
-					if(time() > $updateTimeMax)
-					{
-						$recreate = true;
-					}
-				}
-				else
-				{
-					$recreate = true;
-				}
-			}
-		}
-		else
-		{
-			$recreate = true;
-		}
-		
-		# Recreate file
-		if($recreate)
-		{
-			if($pending AND is_file($filePath))
-			{
-				$json = json_decode(file_get_contents($filePath), true);
-				$json['status'] = 'pending';
-			}
-			else
-			{
-				# Create lock file
-				file_put_contents($filePathPending, time());
-				
-				# Receive the group json data
-				$reciever = new GroupReceiver($this->projectId);
-				$json['data'] = $reciever->getArrayData($group);
-				
-				# Set meta group informations
-				$json['group'] = $group;
-				$json['status'] = 'last';
-				$json['updated'] = time();
-				$json['date'] = time();
-				
-				# Put it in a string
-				$string = json_encode($json);
-				
-				# Test data
-				if(!empty($string) AND count($json['data']) > 0)
-				{
-					file_put_contents($filePath, $string);
-				}
-				else
-				{
-					# Error case (example : impossible to contact ADE)
-					if(is_file($filePath))
-					{
-						# Old file exist : send old file
-						$json = json_decode(file_get_contents($filePath), true);
-						$json['status'] = 'old';
-						$json['updated'] = time() - $locktimeup;
-						$string = json_encode($json);
-						file_put_contents($filePath, $string);
-					}
-					else
-					{
-						# Send error
-						$json = array('error' => 'resource get failure');
-					}
-				}
-				# Remove lock file
-				unlink($filePathPending);
-			}
-		}
+		$json = $this->service('group', $group);
 		return $json;
 	}
 	
 	/**
-	* Test if service is lockeb by another call
-	* @param string $file_Lockfile path
+	* Receive group data
+	* @param integer $group Group id to call
+	* @return array Group Data
 	*/
-	public function testPending($file)
+	public function groupData($group)
 	{
-		$locktimeup = $this->update/2;
-		if(is_file($file))
-		{
-			$lockTimeMax = file_get_contents($file) + $locktimeup;
-			if($currentTime > $lockTimeMax)
-			{
-				unlink($file);
-			}
-			else
-			{
-				return true;
-			}
-		}
-		return false;
+		$reciever = new GroupReceiver($this->projectId);
+		return $reciever->getArrayData($group);
 	}
 }

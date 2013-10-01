@@ -30,7 +30,8 @@
     },
 	"require": {
         "php": ">=5.3.3",
-        "gnkw/http" : "2.*"
+        "gnkw/http" : "2.*",
+        "gnkam/base" : "*"
     },
     "minimum-stability": "dev"
 }
