@@ -31,7 +31,7 @@
 	"require": {
         "php": ">=5.3.3",
         "gnkw/http" : "2.*",
-        "gnkam/base" : "*"
+        "gnkam/base" : "*@dev"
     },
     "minimum-stability": "dev"
 }
