@@ -149,7 +149,8 @@ class GroupReceiver
 			$duration = explode('h', $duration);
 			if(!isset($duration[1]))
 			{
-				$duration[1] = 0;
+				$duration[1] = $duration[0];
+				$duration[0] = 0;
 			}
 			
 			# Save Data
