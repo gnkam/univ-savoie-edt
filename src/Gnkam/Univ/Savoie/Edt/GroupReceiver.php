@@ -147,10 +147,28 @@ class GroupReceiver
 			$hourMin = explode('h', $cellData[4]);
 			$duration = str_replace('min', '',$cellData[5]);
 			$duration = explode('h', $duration);
-			if(!isset($duration[1]))
+			if(preg_match('#min#', $cellData[5]))
 			{
-				$duration[1] = $duration[0];
-				$duration[0] = 0;
+				# There is minutes
+				if(!isset($duration[1]))
+				{
+					$duration[1] = $duration[0];
+					$duration[0] = 0;
+				}
+			}
+			else if(preg_match('#h#', $cellData[5]))
+			{
+				# There is hours but no mintes
+				if(!isset($duration[1]))
+				{
+					$duration[1] = 0;
+				}
+			}
+			else
+			{
+				# No specification about time format
+				$duration[0] = (isset($duration[0])) ? $duration[0] : 0;
+				$duration[1] = (isset($duration[1])) ? $duration[1] : 0;
 			}
 			
 			# Save Data
