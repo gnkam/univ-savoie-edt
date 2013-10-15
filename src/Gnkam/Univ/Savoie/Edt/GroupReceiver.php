@@ -235,7 +235,7 @@ class GroupReceiver
 		$url->addParam('expand', 'false');
 		$url->addParam('forceLoad', 'false');
 		$url->addParam('reload', 'false');
-		$url->addParam('relscrolload', 0);
+		$url->addParam('scroll', 0);
 		$request = $this->client->get($url);
 		$cookies = array();
 		if(isset($this->cookies['JSESSIONID']))
