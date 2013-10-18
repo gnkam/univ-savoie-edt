@@ -185,6 +185,9 @@ class GroupReceiver
 			$placeExtract = explode('(', $cellData[20]);
 			$matiere['place'] = trim($placeExtract[0]);
 			$matiere['projector'] = false;
+			$name = (empty($event['name'])) ? $event['code'] : $event['name'];
+			$avec = (empty($event['teacher'])) ? '' : ' avec ' . $event['teacher'];
+			$matiere['summary'] = $name.$avec;
 			if(isset($placeExtract[1]))
 			{
 				# Seats calcul

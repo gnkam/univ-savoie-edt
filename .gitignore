@@ -10,6 +10,7 @@ composer.phar
 composer.lock
 
 # Project files
+*.kdev4
 
 ## Kate
 .kateproject
