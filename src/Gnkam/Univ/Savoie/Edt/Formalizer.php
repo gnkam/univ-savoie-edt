@@ -59,7 +59,7 @@ class Formalizer extends BaseFormalizer
 		$group = intval($group);
 		if(empty($group))
 		{
-			return null;
+			return array();
 		}
 		
 		$json = $this->service('group', $group);
@@ -75,5 +75,28 @@ class Formalizer extends BaseFormalizer
 	{
 		$reciever = new GroupReceiver($this->projectId);
 		return $reciever->getArrayData($group);
+	}
+	
+	/**
+	* Call service for Tree
+	* @param integer $node Node to call
+	* @return array Node Data
+	*/
+	public function serviceTree($node = null)
+	{
+		$node = ($node === null) ? -1 : $node;
+		$json = $this->service('tree', $node);
+		return $json;
+	}
+	
+	/**
+	* Receive group data
+	* @param integer $node Node id to call
+	* @return array Node Data
+	*/
+	public function treeData($tree)
+	{
+		$receiver = new TreeReceiver($this->getCacheLink(), $this->projectId);
+		return $receiver->getArrayData($tree);
 	}
 }
