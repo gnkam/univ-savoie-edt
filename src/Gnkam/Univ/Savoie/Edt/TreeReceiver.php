@@ -69,13 +69,6 @@ class TreeReceiver
 	{
 		$connect = $this->connect();
 		$this->tree = $this->openTree();
-// 		$this->tree = $this->openBranch(50);
-// 		$this->tree = $this->openBranch(5635);
-// 		$this->tree = $this->openBranch(5660);
-// 		$this->tree = $this->openBranch(5920);
-// 		$this->tree = $this->openCategory('instructor');
-// 		$this->tree = $this->openCategory('room');
-// 		$this->tree = $this->openCategory('resource');
 	}
 	
 	protected function cleanDivs($divs)
@@ -136,42 +129,6 @@ class TreeReceiver
 		return array('data' => $data, 'level' => $level);
 	}
 	
-// 	protected function getArrayNodes()
-// 	{
-// 		$nodes = $this->getNodes();
-// 		
-// 		$lastLevel = 0;
-// 		$tableLevel[-1] = -1;
-// 		$parent = -1;
-// 		$precLevel = 0;
-// 		$array = array('data' => 'root', 'childs' => array());
-// 		$table[-1] = &$array;
-// 		foreach($nodes  as $key => $node)
-// 		{
-// 			$reconstitution = $this->nodeReconstitution($node);
-// 			$level = $reconstitution['level'];
-// 			$data = $reconstitution['data'];
-// 			
-// 			# Add object to general table
-// 			$table[$key] = array('data' => $data);
-// 			
-// 			# Reconstitude tree in array
-// 			if($level === $precLevel +1)
-// 			{
-// 				$parent = $tableLevel[$level - 1];
-// 			}
-// 			else if($level < $precLevel)
-// 			{
-// 				$oldLevel = $level - ($precLevel - $level);
-// 				$parent = $tableLevel[$oldLevel];
-// 			}
-// 			$tableLevel[$level] = $key;
-// 			$table[$parent]['childs'][] = &$table[$key];
-// 			$precLevel = $level;
-// 		}
-// 		return $array['childs'];
-// 	}
-	
 	public function getTableNodes()
 	{
 		$table = array();
@@ -192,7 +149,7 @@ class TreeReceiver
 		$tableLevel[-1] = -1;
 		$parent = -1;
 		$precLevel = 0;
-		$table[-1] = array('id' => -1, 'level' => -1, 'type' => 'root', 'childs' => array());
+		$table[-1] = array('id' => -1, 'name' => 'root', 'level' => -1, 'type' => 'root');
 		foreach($nodes  as $node)
 		{
 			$reconstitution = $this->nodeReconstitution($node);
@@ -233,7 +190,7 @@ class TreeReceiver
 	*/
 	public function getArrayData($node)
 	{
-		if($node != -1)
+		if($node !== -1)
 		{
 			if(!$this->getPathFromCache($node))
 			{
@@ -242,6 +199,17 @@ class TreeReceiver
 		}
 		$this->putPathInCache();
 		$array = $this->getAllNodes();
+		if(!isset($array[$node]))
+		{
+			return null;
+		}
+		if($node === -1)
+		{
+			if(!isset($array[-1]['childs']))
+			{
+				return null;
+			}
+		}
 		return $array[$node];
 	}
 	
