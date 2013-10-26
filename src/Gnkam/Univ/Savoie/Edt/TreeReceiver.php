@@ -98,6 +98,8 @@ class TreeReceiver
 	private function getNodes()
 	{
 		$page = $this->tree->getContent();
+		// Change encoding
+		$page = iconv("CP1252", "UTF-8", $page);
 		preg_match_all('#\<DIV class\=\"treeline\"\>(.+)\<\/DIV\>#sU', $page, $doc);
 		return $doc[1];
 	}
@@ -310,49 +312,6 @@ class TreeReceiver
 		}
 		return $path;
 	}
-	
-// 	public function treeRouting()
-// 	{
-// 		$array = $this->getTableNodes();
-// 		$i=0;
-// 		while(isset($array[$i]))
-// 		{
-// 			switch ($array[$i]['type']) {
-// 			    case 'treecategory':
-// 					echo "openCategory : " . $array[$i]['id'] . "\n";
-// 					$tree = $this->openCategory($array[$i]['id']);
-// 					if($tree->code(200))
-// 					{
-// 						$this->tree = $tree;
-// 					}
-// 					else
-// 					{
-// 					    echo "BAD CODE \n";
-// 					}
-// 					$array = $this->getTableNodes();
-// 					break;
-// 				case 'treebranch':
-// 					echo "openBranch : " . $array[$i]['id'] . "\n";
-// 					$tree = $this->openBranch(intval($array[$i]['id']));
-// 					if($tree->code(200))
-// 					{
-// 						$this->tree = $tree;
-// 					}
-// 					else
-// 					{
-// 					    echo "BAD CODE \n";
-// 					}
-// 					$array = $this->getTableNodes();
-// 				    break;
-// 			}
-// 			$i++;
-// 			if($i == 50)
-// 			{
-// 				break;
-// 			}
-// 		}
-// 		return $this->getArrayNodes();
-// 	}
 	
 	/**
 	* Connect to ADE
