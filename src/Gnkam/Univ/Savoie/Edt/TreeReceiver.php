@@ -162,12 +162,13 @@ class TreeReceiver
 			# Reconstitude tree in array
 			if($level === $precLevel +1)
 			{
-				$parent = $tableLevel[$level - 1];
+				# On prend le niveau précédent
+				$parent = $tableLevel[$precLevel];
 			}
 			else if($level < $precLevel)
 			{
-				$oldLevel = $level - ($precLevel - $level);
-				$parent = $tableLevel[$oldLevel];
+				# On prend le niveau au dessus
+				$parent = $tableLevel[$level-1];
 			}
 			$data['parent'] = $parent;
 			
@@ -265,6 +266,8 @@ class TreeReceiver
 		$path = array();
 		$node = $id;
 		$oldPath = null;
+		
+// 		die();
 		while($node !== -1)
 		{
 			$path = array(
