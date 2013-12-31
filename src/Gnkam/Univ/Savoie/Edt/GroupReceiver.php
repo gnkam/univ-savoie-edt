@@ -22,6 +22,7 @@ namespace Gnkam\Univ\Savoie\Edt;
 
 use Gnkw\Http\Rest\Client;
 use Gnkw\Http\Uri;
+use Gnkam\Base\ReceiverError;
 
 /**
  * Receiver class
@@ -115,15 +116,23 @@ class GroupReceiver
 	{
 		# Get the page
 		$page = $this->page->getContent();
+		$oldPage = $page;
 		if(empty($page))
 		{
-			return array();
+			$error = new ReceiverError();
+			return $error->define('Not found', 404);
 		}
 		
 		# Clean the page
 		$page = preg_replace('#(.+)\<table\>(.+)\<\/table\>(.+)#s', '<table>$2</table>', $page);
 		$page = preg_replace ('#\<tr class\=\"subHeader1\"\>(.+)\<\/tr\>#sU', '', $page);
 		$page = preg_replace ('#\<a href\=\"javascript\:ev\(([0-9]+)\)\"\>([^\<\/a\>]+)\<\/a\>#sU', '$2', $page);
+		
+		if($page === $oldPage)
+		{
+			$error = new ReceiverError();
+			return $error->define('Bad group ID', 400);
+		}
 		
 		# Put in Dom
 		$dom = new \DOMDocument();

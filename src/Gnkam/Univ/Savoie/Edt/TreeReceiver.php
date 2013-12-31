@@ -267,7 +267,6 @@ class TreeReceiver
 		$node = $id;
 		$oldPath = null;
 		
-// 		die();
 		while($node !== -1)
 		{
 			$path = array(
@@ -281,7 +280,7 @@ class TreeReceiver
 			$node = $array[$node]['parent'];
 			$oldPath = $path;
 		}
-		return $path;
+		return (count($path) > 0) ? $path : null;
 	}
 	
 	/**
